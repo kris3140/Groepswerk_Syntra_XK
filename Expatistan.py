@@ -1,8 +1,8 @@
 from bs4 import BeautifulSoup
 import requests
 
-
-
+# changes to be made for USD prices if country is USA
+country = 'france'
 city = "lyon"
 
 headers = {
@@ -27,6 +27,7 @@ chicken = soup.find('a', text='500 gr (1 lb.) of boneless chicken breast')
 
 data_elements = [lunch, chicken]
 
+print(f'{country} / {city}: ')
 for element in data_elements:
     print(element.get_text())
     x = 0
