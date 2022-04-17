@@ -1,7 +1,6 @@
 from bs4 import Tag, NavigableString, BeautifulSoup
 import requests
 
-# changes to be made for USD prices if country is USA
 country = 'south-africa'
 city = "Johannesburg"
 
@@ -22,9 +21,13 @@ except Exception as exc:
 
 soup = BeautifulSoup(response.text, 'html.parser')
 
-crime_index = soup.find('th', text='Index').parent.parent
-list = crime_index.find_all('td')
-print(f' Crime index in {city}, {country} = {list[1].get_text()}\n')
+crime_index = soup.find('td', text="Crime Index: ")
+print(crime_index.string, end='')
+for line in crime_index.next_siblings:
+    if isinstance(line, Tag):
+        if len(line.get_text()) > 3:
+            print(line.get_text())
+print()
 
 level_crime = soup.find('td', text="Level of crime")
 home_broken = soup.find('td', text="Worries home broken and things stolen")
@@ -33,9 +36,9 @@ car_stolen = soup.find('td', text="Worries car stolen")
 
 scrape_list = [level_crime, home_broken, mugged_robbed, car_stolen]
 
-for element in scrape_list:
-    print(element.get_text())
-    for line in element.next_siblings:
+for item in scrape_list:
+    print(item.get_text())
+    for line in item.next_siblings:
         if isinstance(line, Tag):                      # get rid of empty lines which are NavigableStrings
             if len(line.get_text()) > 2:               # get rid of tags without text content or blancs
                 print(line.get_text())
@@ -94,127 +97,4 @@ for element in scrape_list:
 # High</span></td></td></tr>
 # <tr><td class="columnWithName">Worries being mugged or robbed</td><td><div class="jquery_bar" id="worried_mugged_robbed"></div></td><td class="indexValueTd" style="text-align: right">81.33<td class="hidden_on_small_mobile"><span class="red_standard">
 # Very High</span></td></td></tr>
-
-
-# daar kan je een .get_text() methode op loslaten
-# for line in soup.find('h2').next_siblings:
-#     print(line.get_text())
-# OUTPUT :  (partial)
-#
-#
-# Level
-# of
-# crime89
-# .34
-# Very
-# High
-# Crime
-# increasing in the
-# past
-# 3
-# years81
-# .02
-# Very
-# High
-# Worries
-# home
-# broken and things
-# stolen78
-# .97
-# High
-# Worries
-# being
-# mugged or robbed81
-# .33
-# Very
-# High
-# Worries
-# car
-# stolen77
-# .57
-# High
-# Worries
-# things
-# from car stolen81
-#
-# .21
-# Very
-# High
-# Worries
-# attacked75
-# .41
-# High
-# Worries
-# being
-# insulted63
-# .18
-# High
-# Worries
-# being
-# subject
-# to
-# a
-# physical
-# attack
-# because
-# of
-# your
-# skin
-# color, ethnic
-# origin, gender or religion65
-# .78
-# High
-# Problem
-# people
-# using or dealing
-# drugs71
-# .43
-# High
-# Problem
-# property
-# crimes
-# such as vandalism and theft82
-# .68
-# Very
-# High
-# Problem
-# violent
-# crimes
-# such as assault and armed
-# robbery88
-# .34
-# Very
-# High
-# Problem
-# corruption and bribery91
-# .94
-# Very
-# High
-#
-# whenDocReady(function()
-# {
-# $(function() {
-# $( "#level_of_crime").progressbar({
-#     value: 89.34
-# });
-# $("#crime_increasing").progressbar({
-#     value: 81.02
-# });
-# $("#worried_home_broken").progressbar({
-#     value: 78.97
-# });
-# $("#worried_mugged_robbed").progressbar({
-#     value: 81.33
-# });
-# $("#worried_car_stolen").progressbar({
-#     value: 77.57
-# });
-# $("#worried_things_car_stolen").progressbar({
-#     value: 81.21
-# });
-# $("#worried_attacked").progressbar({
-#     value: 75.41
-# });
-# $("#worried_insulted").progressbar({
-#     value: 63.18
 
