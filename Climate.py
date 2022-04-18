@@ -26,7 +26,7 @@ print("temperature: ")
 temp_table = soup.find('tr', "min-table").parent
 for month in temp_table.find_all('th', scope="row"):
     print(month.get_text())
-    for temp in month.parent.find_all('td', limit=3):
+    for temp in month.parent.find_all('td', limit=2):
         print(temp.get_text())
 
 print(); print()
