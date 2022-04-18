@@ -34,6 +34,7 @@ home_broken = soup.find('td', text="Worries home broken and things stolen")
 mugged_robbed = soup.find('td', text="Worries being mugged or robbed")
 car_stolen = soup.find('td', text="Worries car stolen")
 
+
 scrape_list = [level_crime, home_broken, mugged_robbed, car_stolen]
 
 for item in scrape_list:
