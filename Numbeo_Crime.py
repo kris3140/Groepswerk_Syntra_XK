@@ -11,7 +11,6 @@ headers = {
     'DNT': '1',  # Do Not Track Request Header
     'Connection': 'close'
 }
-
 response = requests.get('https://www.numbeo.com/crime/in/' + city, headers=headers, timeout=5)
 
 try:
@@ -22,19 +21,20 @@ except Exception as exc:
 soup = BeautifulSoup(response.text, 'html.parser')
 
 crime_index = soup.find('td', text="Crime Index: ")
-print(crime_index.string, end='')
-for line in crime_index.next_siblings:
-    if isinstance(line, Tag):
-        if len(line.get_text()) > 3:
-            print(line.get_text())
-print()
-
+safety_index = soup.find('td', text="Safety Index: ")
 level_crime = soup.find('td', text="Level of crime")
 home_broken = soup.find('td', text="Worries home broken and things stolen")
 mugged_robbed = soup.find('td', text="Worries being mugged or robbed")
 car_stolen = soup.find('td', text="Worries car stolen")
+attacked = soup.find('td', text="Worries attacked")
+insulted = soup.find('td', text="Worries being insulted")
+drugs = soup.find('td', text="Problem people using or dealing drugs")
+level_safety_walk_day = soup.find('td', text="Safety walking alone during daylight")
+level_safety_walk_night = soup.find('td', text="Safety walking alone during night")
 
-scrape_list = [level_crime, home_broken, mugged_robbed, car_stolen]
+scrape_list = [crime_index, safety_index, level_crime, home_broken,
+               mugged_robbed, car_stolen, attacked, insulted,
+               drugs, level_safety_walk_day, level_safety_walk_night]
 
 for item in scrape_list:
     print(item.get_text())
@@ -46,6 +46,14 @@ for item in scrape_list:
 
 
 
+
+# crime_index = soup.find('td', text="Crime Index: ")
+# print(crime_index.string, end='')
+# for line in crime_index.next_siblings:
+#     if isinstance(line, Tag):
+#         if len(line.get_text()) > 3:
+#             print(line.get_text())
+# print()
 # print(soup.prettify())
 # row 544 = crime index
 
