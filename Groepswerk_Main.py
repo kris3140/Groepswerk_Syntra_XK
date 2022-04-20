@@ -10,7 +10,7 @@ data = ['Mumbai', 'Bombay', 20961465, 1, 15,17,20,23,26,25,30,31,32,32,33,25 ]
 for x in range(4, 16):
       sql = f"UPDATE city SET {list[x]} = '{data[x]}' WHERE ci_id=2"
       if dbase_update(sql): pass
-      else: print(f"Er liep iets fout bij het updaten van de database in kolom {key}")
+      else: print(f"Er liep iets fout bij het updaten van de database in kolom {x}")
 
 
 
