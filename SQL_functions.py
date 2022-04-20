@@ -25,7 +25,7 @@ def get_config():
     dbase = 'test_cities'
     return {
         'user': 'root',
-        'password': 'Gloeilamp+123',
+        'password': 'xxxxxxxx',
         'host': '127.0.0.1',
         'database': dbase,
         'raise_on_warnings': True
