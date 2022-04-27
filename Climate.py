@@ -22,6 +22,8 @@ except Exception as exc:
 
 soup = BeautifulSoup(response.text, 'html.parser')
 
+
+
 print("temperature: ")
 temp_table = soup.find('tr', "min-table").parent
 for month in temp_table.find_all('th', scope="row"):
@@ -50,9 +52,11 @@ best_month = best_month.replace('<strong>', '')
 best_month = best_month.replace('</strong>', '')
 best_month = best_month.replace('\n', ' ')
 print(); print("Best Month: \n", best_month)
+print()
 
 
-
+# print(soup.prettify())
+# sunshine line 964
 
 
 #

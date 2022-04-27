@@ -1,36 +1,24 @@
 import mysql.connector as mysql
 
-def get_dict():
-    return {
-        'ci_name': "Mumbai",
-        'ci_name2': "Bombay",
-        'ci_population': 20961472,
-        'ci_co_id': 2,
-        'ci_mintemp_jan': 17,
-        'ci_mintemp_feb': 18,
-        'ci_mintemp_mar': 21,
-        'ci_mintemp_apr': 24,
-        'ci_mintemp_may': 27,
-        'ci_mintemp_jun': 26,
-        'ci_maxtemp_jan': 31,
-        'ci_maxtemp_feb': 32,
-        'ci_maxtemp_mar': 33,
-        'ci_maxtemp_apr': 33,
-        'ci_maxtemp_may': 34,
-        'ci_maxtemp_jun': 32
-    }
 
+# def get_config():
+#     dbase = 'test_cities2'
+#     return {
+#         'user': 'root',
+#         'password': 'Gloeilamp+123',
+#         'host': '127.0.0.1',
+#         'database': dbase,
+#         'raise_on_warnings': True
+#         }  # dit is local host
 
 def get_config():
-    dbase = 'test_cities'
-    return {
-        'user': 'root',
-        'password': 'xxxxxxxx',
-        'host': '127.0.0.1',
-        'database': dbase,
+     return {
+        'user': 'py_xavier',
+        'password': 'pk6pMJXXj83n',
+        'host': '185.115.218.166',
+        'database': 'py_xavier',
         'raise_on_warnings': True
-        }  # dit is local host
-
+        }
 
 def get_data(sql):
 
@@ -102,3 +90,25 @@ def dbase_update(sql):
 #     data = GetData(sql)
 #     return data
 #
+
+
+def get_dict():
+    return {
+        'ci_name': "Mumbai",
+        'ci_name2': "Bombay",
+        'ci_population': 20961472,
+        'ci_co_id': 2,
+        'ci_mintemp_jan': 17,
+        'ci_mintemp_feb': 18,
+        'ci_mintemp_mar': 21,
+        'ci_mintemp_apr': 24,
+        'ci_mintemp_may': 27,
+        'ci_mintemp_jun': 26,
+        'ci_maxtemp_jan': 31,
+        'ci_maxtemp_feb': 32,
+        'ci_maxtemp_mar': 33,
+        'ci_maxtemp_apr': 33,
+        'ci_maxtemp_may': 34,
+        'ci_maxtemp_jun': 32
+    }
+
