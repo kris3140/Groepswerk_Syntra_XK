@@ -1,4 +1,4 @@
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, Tag
 import requests
 
 
@@ -13,7 +13,7 @@ headers = {
     'Connection': 'close'
 }
 
-response = requests.get('https://www.climatestotravel.com/climate/' + country +'/' + city, headers=headers, timeout=5)
+response = requests.get('https://www.climatestotravel.com/climate/' + country +'/' + city, headers=headers, timeout=8)
 
 try:
     response.raise_for_status()
@@ -53,6 +53,18 @@ best_month = best_month.replace('</strong>', '')
 best_month = best_month.replace('\n', ' ')
 print(); print("Best Month: \n", best_month)
 print()
+
+all_data = []
+sunshine_list = []
+
+table = soup.find('table', class_="sole")
+for child in table.children:
+    if isinstance(child, Tag):
+         all_data.append(child.get_text())
+for x in range(4, 40, 3):
+    sunshine_list.append(all_data[x])
+print('sunshine : ')
+print(sunshine_list)
 
 
 # print(soup.prettify())
@@ -108,3 +120,33 @@ print()
 # <th scope="row" title="December">December</th><td>9</td><td>275</td>
 # <th scope="row" title="Year">Year</th><td>7.2</td><td>2615</td>
 # <br/>
+
+#
+# datalist = []
+# table = soup.find('table', class_="sole")
+# for child in table.children:
+#     datalist.append(child)
+# print(datalist)
+# output:
+# [
+# <caption>Mumbai - Sunshine hours</caption>,
+# <tr class="title-table-new"># <th scope="col">Month</th># <th scope="col" title="Average daily sunshine hours">Average</th># <th scope="col">Total</th># </tr>,
+# <th scope="row" title="January">January</th>,
+# <td>9</td>,
+# <td>280</td>,
+# <th scope="row" title="February">February</th>,
+# <td>9.5</td>,
+# <td>275</td>,
+# <th scope="row" title="March">March</th>, <td>9</td>, <td>280</td>, <th scope="row" title="April">April</th>, <td>9.5</td>, <td>280</td>, <th scope="row" title="May">May</th>, <td>9</td>, <td>275</td>, <th scope="row" title="June">June</th>, <td>4.5</td>, <td>140</td>, <th scope="row" title="July">July</th>, <td>2.5</td>, <td>80</td>, <th scope="row" title="August">August</th>, <td>2.5</td>, <td>80</td>, <th scope="row" title="September">September</th>, <td>5</td>, <td>145</td>, <th scope="row" title="October">October</th>, <td>7.5</td>, <td>240</td>, <th scope="row" title="November">November</th>, <td>9</td>, <td>265</td>, <th scope="row" title="December">December</th>, <td>9</td>, <td>275</td>, <th scope="row" title="Year">Year</th>, <td>7.2</td>, <td>2615</td>]
+#
+# but : table.find('td') did not work ; output was 'None'
+
+# datalist = []
+# table = soup.find('table', class_="sole")
+# for child in table.children:
+#     if isinstance(child, Tag):
+#          datalist.append(child.get_text())
+# print(datalist)
+# output:
+# ['Mumbai - Sunshine hours', 'MonthAverageTotal', 'January', '9', '280', 'February', '9.5', '275', 'March', '9', '280', 'April', '9.5', '280', 'May', '9', '275', 'June', '4.5', '140', 'July', '2.5', '80', 'August', '2.5', '80', 'September', '5', '145', 'October', '7.5', '240', 'November', '9', '265', 'December', '9', '275', 'Year', '7.2', '2615']
+#
