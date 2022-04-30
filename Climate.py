@@ -1,9 +1,21 @@
 from bs4 import BeautifulSoup, Tag
 import requests
 
+country_only =  [ 'yerevan','baku','manama','bujumbura','phnom penh','djibouti','santo domingo','san salvador','tbilisi','guatemala city','port au prince','hong kong','tehran','baghdad','tel aviv','kingston',
+    'astana','kuwait city','beirut','monrovia','macao','lilongwe','kuala lumpur','ulaanbaatar','kathmandu','auckland','managua','muscat','panama city','manila','san juan','doha','riyadh','freetown','singapore',
+    'taibei','port of spain','tashkent','ho chi minh city','hanoi','lusaka'  ]
 
-country = "india"
-city = "mumbai"
+
+
+country = "new zealand"
+country = country.replace(' ', '-')
+city = "auckland"
+city = city.replace(' ', '-')
+insert = country + '/' + city
+
+if city in country_only:
+    insert = country
+
 
 headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36',
@@ -13,7 +25,7 @@ headers = {
     'Connection': 'close'
 }
 
-response = requests.get('https://www.climatestotravel.com/climate/' + country +'/' + city, headers=headers, timeout=8)
+response = requests.get('https://www.climatestotravel.com/climate/' + insert, headers=headers, timeout=8)
 
 try:
     response.raise_for_status()
