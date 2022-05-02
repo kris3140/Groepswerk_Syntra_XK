@@ -2,11 +2,11 @@ from bs4 import BeautifulSoup
 import requests
 import re
 
-country = 'usa'
-city = "new-york-city"
+country = 'japan'
+city = "tokyo"
 
-# country = 'india'
-# city = "mumbai"
+# country = 'china'
+# city = "shanghai"
 
 headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36',
@@ -51,24 +51,24 @@ print(f'{country} / {city}: ')
 for element in data_elements:
     x = 0
     for sibling in element.parent.next_siblings:
-        if country != 'usa':
+        if country != 'united states':
             x += 1                                               # should run 4 times
             try:
                 usd = sibling.find('i')
                 usd = usd.get_text()
                 usd = re.search(regex, usd)
                 data = usd.group(1)
-                print(country, city, element.get_text(), ': ', data.replace(',', ''))
+                print(country, ";" ,city,";" ,element.get_text(), '; ', data.replace(',', ''))
             except:
                 continue
-        if country == 'usa':
+        if country == 'united states':
             x += 1.4                                          # must run 3 times
             try:
-                if len(sibling.get_text()) > 2:               # get rid of '\n' and
+                if len(sibling.get_text()) > 2:               # get rid of '\n'
                     usd = sibling.get_text()
                     usd = re.search(regex2, usd)
                     data = usd.group(1)
-                    print(country, city, element.get_text(), ': ', data.replace(',', ''))
+                    print(country, ";" ,city,";", element.get_text(), '; ', data.replace(',', ''))
             except:
                 continue
         if x >= 4: break

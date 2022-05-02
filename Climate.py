@@ -5,8 +5,6 @@ country_only =  [ 'yerevan','baku','manama','bujumbura','phnom penh','djibouti',
     'astana','kuwait city','beirut','monrovia','macao','lilongwe','kuala lumpur','ulaanbaatar','kathmandu','auckland','managua','muscat','panama city','manila','san juan','doha','riyadh','freetown','singapore',
     'taibei','port of spain','tashkent','ho chi minh city','hanoi','lusaka'  ]
 
-
-
 country = "new zealand"
 country = country.replace(' ', '-')
 city = "auckland"
@@ -15,7 +13,6 @@ insert = country + '/' + city
 
 if city in country_only:
     insert = country
-
 
 headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36',
