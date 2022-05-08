@@ -3,8 +3,8 @@ from Scraping_functions import *
 from time import sleep
 
 
-start_id = 54
-end_id = 56
+start_id = 56
+end_id = 57
 
 for city_id in range(start_id, end_id):
       sql = f"select name_climate, name_expat, name_numbeo, co_name as country from city left join country c on c.co_id = city.ci_co_id where ci_id = {city_id}"
