@@ -35,13 +35,16 @@ def climate(city, country):
 
     soup = BeautifulSoup(response.text, 'html.parser')
 
-    data_list = []
+    temp_list = []
+    rain_list = []
+    sun_list = []
 
     # temperature
     temp_table = soup.find('tr', "min-table").parent
     for month in temp_table.find_all('th', scope="row"):
         for temp in month.parent.find_all('td', limit=2):
-            data_list.append(temp.get_text())
+            temp_list.append(temp.get_text())
+    temp_list.pop(); temp_list.pop()                                              # remove year data
 
     # precipitation
     x = 4
@@ -49,8 +52,9 @@ def climate(city, country):
     for month in precipit_table.find_all('th', scope="row"):
         for precipit in month.parent.find_all('td'):
             if x % 3 == 0 or x % 3 == 1:                                          # modulo to get only the first and third data element
-                data_list.append(precipit.get_text())
+                rain_list.append(precipit.get_text())
             x += 1
+    rain_list.pop(); rain_list.pop()
 
     # sunshine
     sun_data = []
@@ -59,9 +63,9 @@ def climate(city, country):
         if isinstance(child, Tag):
             sun_data.append(child.get_text())
     for x in range(4, 40, 3):
-        data_list.append(sun_data[x])
+        sun_list.append(sun_data[x])
 
-    return data_list
+    return temp_list, rain_list, sun_list
 
 
 
