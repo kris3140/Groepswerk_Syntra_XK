@@ -1,16 +1,6 @@
 import mysql.connector as mysql
 
 
-# def get_config():
-#     dbase = 'test_cities2'
-#     return {
-#         'user': 'root',
-#         'password': 'Gloeilamp+123',
-#         'host': '127.0.0.1',
-#         'database': dbase,
-#         'raise_on_warnings': True
-#         }  # dit is local host
-
 def get_config():
      return {
         'user': 'py_xavier',
@@ -24,12 +14,11 @@ def get_data(sql):
 
     config = get_config()
     cnx = mysql.connect(**config)
-    cursor = cnx.cursor(dictionary=True)
+    cursor = cnx.cursor()   #(dictionary=True)
     cursor.execute(sql)
 
-    data = []
     for row in cursor:
-        data.append(row)
+        data = row
 
     cursor.close()
     cnx.close()
