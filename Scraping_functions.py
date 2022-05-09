@@ -26,7 +26,7 @@ def climate(city, country):
         insert = country
 
     headers = header()
-    response = requests.get('https://www.climatestotravel.com/climate/' + insert, headers=headers, timeout=8)
+    response = requests.get('https://www.climatestotravel.com/climate/' + insert, headers=headers, timeout=10)
 
     try:
         response.raise_for_status()
