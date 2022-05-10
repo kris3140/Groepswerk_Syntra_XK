@@ -36,7 +36,7 @@ for spec in specs:
     ax.legend()
 
     fig.set_size_inches([6,5])
-    fig.savefig(f"{spec}.png", dpi=300)
+    fig.savefig(f"graph_{spec}.png", dpi=300)
 
 
 # create bar charts for rest of the data
