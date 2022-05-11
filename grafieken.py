@@ -13,32 +13,32 @@ city_name1 = city1.iloc[0,0]
 city_name2 = city2.iloc[0,0]
 
 # create plots for climate data
-# specs = ["TEMP_MIN", "TEMP_MAX", "RAIN", "RAINDAYS", "SUN"]
-# for spec in specs:
-    # # get pandas subset with months and minimum temperature
-    # spec_pd1 = city1[city1["spec"] == spec]
-    # spec_pd2 = city2[city2["spec"] == spec]
-    # # get index (months) and values
-    # index1 = spec_pd1["month"]
-    # index2 = spec_pd2["month"]
-    # value1 = spec_pd1["value"].astype(int)
-    # value2 = spec_pd2["value"].astype(int)
-    # # get long description of spec
-    # title = spec_pd1.iloc[0,4]
-    # # get description of measure
-    # measure = spec_pd1.iloc[0,5]
-    #
-    #
-    # fig, ax = plt.subplots()
-    # ax.plot(index1, value1, label=city_name1)
-    # ax.plot(index2, value2, label=city_name2)
-    # ax.set_xlabel("Months")
-    # ax.set_ylabel(measure)
-    # ax.set_title(title)
-    # ax.legend()
-    #
-    # fig.set_size_inches([6,5])
-    # fig.savefig(f"graph_{spec}.png", dpi=300)
+specs = ["TEMP_MIN", "TEMP_MAX", "RAIN", "RAINDAYS", "SUN"]
+for spec in specs:
+    # get pandas subset with months and minimum temperature
+    spec_pd1 = city1[city1["spec"] == spec]
+    spec_pd2 = city2[city2["spec"] == spec]
+    # get index (months) and values
+    index1 = spec_pd1["month"]
+    index2 = spec_pd2["month"]
+    value1 = spec_pd1["value"].astype(int)
+    value2 = spec_pd2["value"].astype(int)
+    # get long description of spec
+    title = spec_pd1.iloc[0,4]
+    # get description of measure
+    measure = spec_pd1.iloc[0,5]
+
+
+    fig, ax = plt.subplots()
+    ax.plot(index1, value1, label=city_name1)
+    ax.plot(index2, value2, label=city_name2)
+    ax.set_xlabel("Months")
+    ax.set_ylabel(measure)
+    ax.set_title(title)
+    ax.legend()
+
+    fig.set_size_inches([6,5])
+    fig.savefig(f"graph_{spec}.png", dpi=300)
 
 
 # create bar charts for the rest of the data
