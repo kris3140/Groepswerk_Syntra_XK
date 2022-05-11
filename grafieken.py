@@ -1,6 +1,8 @@
 import pandas as pd
 from SQL_functions import get_pandas
 import matplotlib.pyplot as plt
+import numpy as np
+
 
 # get all data out of the SQL database for both cities
 city1 = get_pandas(61)
@@ -11,39 +13,114 @@ city_name1 = city1.iloc[0,0]
 city_name2 = city2.iloc[0,0]
 
 # create plots for climate data
-specs = ["TEMP_MIN", "TEMP_MAX", "RAIN", "RAINDAYS", "SUN"]
-for spec in specs:
-    # get pandas subset with months and minimum temperature
-    spec_pd1 = city1[city1["spec"] == spec]
-    spec_pd2 = city2[city2["spec"] == spec]
-    # get index (months) and values
-    index1 = spec_pd1["month"]
-    index2 = spec_pd2["month"]
-    value1 = spec_pd1["value"].astype(int)
-    value2 = spec_pd2["value"].astype(int)
-    # get long description of spec
-    title = spec_pd1.iloc[0,4]
-    # get description of measure
-    measure = spec_pd1.iloc[0,5]
+# specs = ["TEMP_MIN", "TEMP_MAX", "RAIN", "RAINDAYS", "SUN"]
+# for spec in specs:
+    # # get pandas subset with months and minimum temperature
+    # spec_pd1 = city1[city1["spec"] == spec]
+    # spec_pd2 = city2[city2["spec"] == spec]
+    # # get index (months) and values
+    # index1 = spec_pd1["month"]
+    # index2 = spec_pd2["month"]
+    # value1 = spec_pd1["value"].astype(int)
+    # value2 = spec_pd2["value"].astype(int)
+    # # get long description of spec
+    # title = spec_pd1.iloc[0,4]
+    # # get description of measure
+    # measure = spec_pd1.iloc[0,5]
+    #
+    #
+    # fig, ax = plt.subplots()
+    # ax.plot(index1, value1, label=city_name1)
+    # ax.plot(index2, value2, label=city_name2)
+    # ax.set_xlabel("Months")
+    # ax.set_ylabel(measure)
+    # ax.set_title(title)
+    # ax.legend()
+    #
+    # fig.set_size_inches([6,5])
+    # fig.savefig(f"graph_{spec}.png", dpi=300)
 
 
+# create bar charts for the rest of the data
+def create_barchart(Specs, city1_values, city2_values, city_name1, city_name2, title ):
+    x = np.arange(len(Specs))
+    width = 0.35
     fig, ax = plt.subplots()
-    ax.plot(index1, value1, label=city_name1)
-    ax.plot(index2, value2, label=city_name2)
-    ax.set_xlabel("Months")
-    ax.set_ylabel(measure)
+    rects1 = ax.bar(x - width / 2, city1_values, width, label=city_name1, color='#301ee3')
+    rects2 = ax.bar(x + width / 2, city2_values, width, label=city_name2, color='#b0f68e')
+    ax.set_ylabel('USD')
     ax.set_title(title)
+    ax.set_xticks(x, Specs)
     ax.legend()
+    fig.set_size_inches([6, 5])
+    fig.savefig(f"bar_{title}.png", dpi=300)
 
-    fig.set_size_inches([6,5])
-    fig.savefig(f"graph_{spec}.png", dpi=300)
+# set spec as index
+city1.set_index('spec', inplace=True)
+city2.set_index('spec', inplace=True)
 
+# create a subset for 'a night out'
+title = "A Night Out"
+city1_data = city1.loc["LUNCH":"BEER", :]
+city2_data = city2.loc["LUNCH":"BEER", :]
+city1_values = list(city1_data["value"].astype(float))
+city2_values = list(city2_data["value"].astype(float))
+Specs = city1_data.index
+create_barchart(Specs, city1_values, city2_values, city_name1, city_name2, title )
 
-# create bar charts for rest of the data
+# create a subset for 'Rent'
+title = "Rent"
+city1_data = city1.loc["RENT":"RENT", :]
+city2_data = city2.loc["RENT":"RENT", :]
+city1_values = list(city1_data["value"].astype(float))
+city2_values = list(city2_data["value"].astype(float))
+Specs = city1_data.index
+create_barchart(Specs, city1_values, city2_values, city_name1, city_name2, title )
 
+# create a subset for 'Household'
+title = "Household"
+city1_data = city1.loc["UTILITIES":"CLEANING", :]
+city2_data = city2.loc["UTILITIES":"CLEANING", :]
+city1_values = list(city1_data["value"].astype(float))
+city2_values = list(city2_data["value"].astype(float))
+Specs = city1_data.index
+create_barchart(Specs, city1_values, city2_values, city_name1, city_name2, title )
 
+# create a subset for 'Transport'
+title = "Transport"
+city1_data = city1.loc["GAS":"TRANSPORT", :]
+city2_data = city2.loc["GAS":"TRANSPORT", :]
+city1_values = list(city1_data["value"].astype(float))
+city2_values = list(city2_data["value"].astype(float))
+Specs = city1_data.index
+create_barchart(Specs, city1_values, city2_values, city_name1, city_name2, title )
 
+# create a subset for 'shopping' items
+title = "Shopping"
+city1_data = city1.loc["JEANS":"COLA", :]
+city2_data = city2.loc["JEANS":"COLA", :]
+city1_values = list(city1_data["value"].astype(float))
+city2_values = list(city2_data["value"].astype(float))
+Specs = city1_data.index
+create_barchart(Specs, city1_values, city2_values, city_name1, city_name2, title )
 
+# create a subset for 'safety' items
+title = "Safety"
+city1_data = city1.loc["CRIME":"WALK_NIGHT", :]
+city2_data = city2.loc["CRIME":"WALK_NIGHT", :]
+city1_values = list(city1_data["value"].astype(float))
+city2_values = list(city2_data["value"].astype(float))
+Specs = city1_data.index
+create_barchart(Specs, city1_values, city2_values, city_name1, city_name2, title )
+
+# create a subset for 'poluttion' items
+title = "Poluttion"
+city1_data = city1.loc["POLLUTION":"PARKS", :]
+city2_data = city2.loc["POLLUTION":"PARKS", :]
+city1_values = list(city1_data["value"].astype(float))
+city2_values = list(city2_data["value"].astype(float))
+Specs = city1_data.index
+create_barchart(Specs, city1_values, city2_values, city_name1, city_name2, title )
 
 
 #
