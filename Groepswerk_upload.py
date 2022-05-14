@@ -3,8 +3,8 @@ from Scraping_functions import *
 from time import sleep
 
 # Define the starting point and end point of the loop
-start_id = 55
-end_id = 56
+start_id = 61
+end_id = 62
 
 # Loop through the cities
 for city_id in range(start_id, end_id):
@@ -44,7 +44,7 @@ for city_id in range(start_id, end_id):
       print('crime:', numbeo_crime_data)
       # Load crime data into database (via SQL functions)
       for index, value in enumerate(numbeo_crime_data):
-            sql = f"INSERT INTO testdata SET td_ci_id = {city_id}, td_spec_id = {index + 20 }, td_mo_id = 13, td_value = {value}"
+            sql = f"INSERT INTO testdata SET td_ci_id = {city_id}, td_spec_id = {index + 23 }, td_mo_id = 13, td_value = {value}"
             dbase_insert(sql)
 
       # Scrape pollution data (via Scraping functions)
@@ -52,40 +52,25 @@ for city_id in range(start_id, end_id):
       print('pollution:', numbeo_pollution_data)
       # Load pollution data into database (via SQL functions)
       for index, value in enumerate(numbeo_pollution_data):
-            sql = f"INSERT INTO testdata SET td_ci_id = {city_id}, td_spec_id = {index + 29 }, td_mo_id = 13, td_value = {value}"
+            sql = f"INSERT INTO testdata SET td_ci_id = {city_id}, td_spec_id = {index + 31}, td_mo_id = 13, td_value = {value}"
             dbase_insert(sql)
 
       sleep(1)
 
 
 
-
-# output get_data()
-# city_names = ('tirana', 'tirana', 'Tirana', 'Albania')
-
-# output climate()
-# temp_data = ['2', '12', '3', '14', '6', '17', '9', '20', '13', '25', '17', '29', '19', '32', '18', '33', '15', '28', '11', '23', '7', '18', '3', '14']
-# index even and uneven = sp_id 1 and 2
-# rain_data = ['135', '10', '150', '10', '130', '11', '115', '10', '120', '9', '85', '5', '30', '4', '30', '3', '60', '5', '105', '7', '210', '12', '175', '12']
-# index even and uneven = sp_id  3 and 4
-# sun_data = ['125', '125', '165', '190', '265', '300', '355', '325', '265', '220', '125', '90']
-# sp_id = 5
-
-# output expat()
-# expat_data = ['8', '14', '2.76', '356', '92', '105', '5.08', '1.73', '14', '53', '89', '2.71', '12', '1.37']
-# from index 0 to 13 = from sp_id 6 to 19
-
-# output numbeo_crime()
-# numbeo_crime_data = ['46.82', '40.57', '42.04', '41.25', '36.31', '37.89', '50.76', '71.88', '54.27']
-# from index 0 to 8 = from sp_id 20 to 28
-
-# output numbeo_pollution()
-# numbeo_pollution_data = ['87.94', '81.67', '74.75', '69.66', '59.00', '72.50', '30.00', '31.80']
-# # from index 0 to 7 = from sp_id 29 to 36
-
-
-# for index, value in enumerate(data):
-#       sql = f"INSERT INTO data SET da_ci_id = {city}, da_spec_id = {spec}, da_mo_id = {index +1}, da_value = {value}"
-#       if dbase_insert(sql): pass
-#       else: print(f"Er liep iets fout bij het updaten van de database in maand {index +1}")
+# output
+#
+# ('perth', 'perth', 'Perth', 'Australia')
+#
+# temp: ['18', '32', '18', '32', '16', '30', '14', '26', '11', '22', '9', '20', '8', '18', '8', '19', '9', '21', '11', '24', '13', '27', '16', '30']
+# rain: ['15', '1', '15', '1', '20', '2', '30', '4', '80', '9', '125', '12', '140', '14', '120', '13', '80', '11', '35', '5', '30', '4', '10', '2']
+# sun: ['355', '320', '300', '250', '205', '175', '190', '225', '230', '300', '320', '355']
+# sun is index + 5
+# cost of living: ['15', '25', '7', '1444', '1166', '1271', '867', '262', '153', '176.0', '61.5', '116', '63', '108', '3.96', '11', '1.94']
+# cost of living is index 6 to 22
+# crime: ['43.99', '42.13', '33.66', '30.39', '40.14', '55.04', '76.35', '43.04']
+# crime is index 23 to 30
+# pollution: ['23.14', '17.06', '13.94', '26.29', '31.79', '82.04', '83.10']
+# pollution is indexx 31 to 37
 

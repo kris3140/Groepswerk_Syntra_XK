@@ -157,14 +157,13 @@ def numbeo_crime(city):
     mugged_robbed = soup.find('td', text="Worries being mugged or robbed")
     car_stolen = soup.find('td', text="Worries car stolen")
     attacked = soup.find('td', text="Worries attacked")
-    insulted = soup.find('td', text="Worries being insulted")
     drugs = soup.find('td', text="Problem people using or dealing drugs")
     level_safety_walk_day = soup.find('td', text="Safety walking alone during daylight")
     level_safety_walk_night = soup.find('td', text="Safety walking alone during night")
 
     scrape_list = [level_crime, home_broken,
-                   mugged_robbed, car_stolen, attacked, insulted,
-                   drugs, level_safety_walk_day, level_safety_walk_night]
+                   mugged_robbed, car_stolen, attacked, drugs,
+                   level_safety_walk_day, level_safety_walk_night]
 
     data_list = []
     regex = r'(\d+.?\d*)'
@@ -199,12 +198,10 @@ def numbeo_pollution(city):
     drinking_water_pollution = soup.find('td', text="Drinking Water Pollution and Inaccessibility")
     dirty_untidy = soup.find('td', text="Dirty and Untidy")
     noise_pollution = soup.find('td', text="Noise and Light Pollution")
-    water_pollution = soup.find('td', text="Water Pollution")
     comfortable_time_spend_city = soup.find('td', text="Comfortable to Spend Time in the City")
     quality_green_parks = soup.find('td', text="Quality of Green and Parks")
 
-    scrape_list = [pollution_index, air_pollution, drinking_water_pollution, dirty_untidy,
-                   noise_pollution, water_pollution,
+    scrape_list = [pollution_index, air_pollution, drinking_water_pollution, dirty_untidy, noise_pollution,
                    comfortable_time_spend_city, quality_green_parks]
 
     data_list = []
