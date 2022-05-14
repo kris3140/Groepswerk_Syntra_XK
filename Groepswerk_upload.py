@@ -72,5 +72,5 @@ for city_id in range(start_id, end_id):
 # crime: ['43.99', '42.13', '33.66', '30.39', '40.14', '55.04', '76.35', '43.04']
 # crime is index 23 to 30
 # pollution: ['23.14', '17.06', '13.94', '26.29', '31.79', '82.04', '83.10']
-# pollution is indexx 31 to 37
+# pollution is index 31 to 37
 
