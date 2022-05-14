@@ -86,7 +86,10 @@ def expat(city, country):
     lunch = soup.find('a', text='Basic lunchtime menu (including a drink) in the business district')
     movies = soup.find('a', text='2 tickets to the movies')
     beer = soup.find('a', text='1 beer in neighbourhood pub (500ml or 1pt.) ')
-    rent = soup.find('a', text='Monthly rent for 85 m2 (900 sqft) furnished accommodation in normal area')
+    rent1 = soup.find('a', text='Monthly rent for 85 m2 (900 sqft) furnished accommodation in expensive area')
+    rent2 = soup.find('a', text='Monthly rent for 85 m2 (900 sqft) furnished accommodation in normal area')
+    rent3 = soup.find('a', text='Monthly rent for a 45 m2 (480 sqft) furnished studio in expensive area')
+    rent4 = soup.find('a', text='Monthly rent for a 45 m2 (480 sqft) furnished studio in normal area')
     utilities = soup.find('a', text='Utilities 1 month (heating, electricity, gas ...) for 2 people in 85m2 flat')
     microwave = soup.find('a', text='Microwave 800/900 watt (bosch, panasonic, lg, sharp, or equivalent brands)')
     cleaning = soup.find('a', text='Hourly rate for cleaning help')
@@ -98,7 +101,7 @@ def expat(city, country):
     wine = soup.find('a', text='1 bottle of red table wine, good quality')
     cola = soup.find('a', text='2 liters of coca-cola')
 
-    data_elements = [lunch, movies, beer, rent, utilities, microwave, cleaning, gas, transport, jeans, shoes, chicken,
+    data_elements = [lunch, movies, beer, rent1, rent2, rent3, rent4, utilities, microwave, cleaning, gas, transport, jeans, shoes, chicken,
                      wine, cola]
 
     regex = r'\(\$(\d+.?\d*)\)'
@@ -116,7 +119,6 @@ def expat(city, country):
                     usd = usd.get_text()
                     usd = re.search(regex, usd)
                     data = usd.group(1)
-                    data_list.append(data.replace(',', ''))
                 except:
                     continue
             if country == 'United States':
@@ -126,9 +128,12 @@ def expat(city, country):
                         usd = sibling.get_text()
                         usd = re.search(regex2, usd)
                         data = usd.group(1)
-                        data_list.append(data.replace(',', ''))
                 except:
                     continue
+            data = data.replace(',', '')
+            if element == gas: data = float(data) * 50           # gas for 50 liter
+            if element == cleaning: data = float(data) * 8       # 1 day of cleaning
+            data_list.append(str(data))
             if x >= 4: break
 
     return data_list
