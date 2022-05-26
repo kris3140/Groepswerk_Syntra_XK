@@ -14,19 +14,21 @@ def header():
 
 def climate(city, country):
 
-    country_only =  [ 'yerevan','baku','manama','bujumbura','phnom penh','djibouti','santo domingo','san salvador','tbilisi','guatemala city','port au prince','hong kong','tehran','baghdad','tel aviv','kingston',
-        'astana','kuwait city','beirut','monrovia','macao','lilongwe','kuala lumpur','ulaanbaatar','kathmandu','auckland','managua','muscat','panama city','manila','san juan','doha','riyadh','freetown','singapore',
-        'taibei','port of spain','tashkent','ho chi minh city','hanoi','lusaka'  ]
+    country_only =  [ 'yerevan','baku','manama','bujumbura','phnom-penh','djibouti','santo-domingo','san-salvador','tbilisi','guatemala-city','port-au-prince','hong-kong','tehran','baghdad','tel-aviv', 'jerusalem','kingston',
+        'astana','kuwait-city','beirut','monrovia','macao','lilongwe','kuala-lumpur','ulaanbaatar','kathmandu','auckland','managua','muscat','panama-city','manila','san-juan','doha','riyadh','freetown','singapore',
+        'taibei','port-of-spain','tashkent','ho-chi-minh-city','hanoi','lusaka'  ]
 
     country = country.replace(' ', '-')
     city = city.replace(' ', '-')
     insert = country + '/' + city
 
+
     if city in country_only:
         insert = country
 
+    print(insert)
     headers = header()
-    response = requests.get('https://www.climatestotravel.com/climate/' + insert, headers=headers, timeout=10)
+    response = requests.get('https://www.climatestotravel.com/climate/' + insert, headers=headers, timeout=20)
 
     try:
         response.raise_for_status()
@@ -107,12 +109,13 @@ def expat(city, country):
     regex = r'\(\$(\d+.?\d*)\)'
     regex2 = r'.+\$(\d+.?\d*)'
     usd = ''
+    data = 0
     data_list = []
 
     for element in data_elements:
         x = 0
         for sibling in element.parent.next_siblings:
-            if country != 'United States':
+            if country != 'United States' :
                 x += 1  # should run 4 times
                 try:
                     usd = sibling.find('i')
@@ -121,19 +124,22 @@ def expat(city, country):
                     data = usd.group(1)
                 except:
                     continue
-            if country == 'United States':
+            else:
                 x += 1.4  # must run 3 times
                 try:
                     if len(sibling.get_text()) > 2:  # get rid of '\n'
                         usd = sibling.get_text()
                         usd = re.search(regex2, usd)
                         data = usd.group(1)
+                        print(country, ";", city, ";", element.get_text(), '; ', data.replace(',', ''))
+
                 except:
                     continue
             data = data.replace(',', '')
-            if element == gas: data = float(data) * 50           # gas for 50 liter
-            if element == cleaning: data = float(data) * 8       # 1 day of cleaning
+            if element == gas: data = float(data) * 50  # gas for 50 liter
+            if element == cleaning: data = float(data) * 8  # 1 day of cleaning
             data_list.append(str(data))
+
             if x >= 4: break
 
     return data_list
@@ -217,3 +223,82 @@ def numbeo_pollution(city):
                     data_list.append(data)
 
     return data_list
+
+#
+# C:\Users\kris3\PycharmProjects\Groepswerk\Scripts\python.exe C:/Users/kris3/PycharmProjects/Groepswerk/Groepswerk_upload.py
+# 223 : ('new york', 'new york city', 'New York', 'United States')
+# United-States/new-york
+# temp: ['-3', '4', '-2', '6', '2', '10', '7', '16', '12', '22', '18', '26', '21', '30', '21', '28', '17', '24', '11', '18', '5', '12', '1', '7']
+# rain: ['90', '11', '80', '10', '110', '11', '105', '11', '100', '12', '115', '11', '115', '10', '115', '10', '110', '9', '110', '10', '90', '9', '110', '11']
+# sun: ['165', '165', '210', '225', '255', '255', '270', '270', '220', '210', '150', '140']
+# 0
+# 20
+# 20
+# 20
+# 32
+# 32
+# 32
+# 8
+# 8
+# 8
+# 4,971
+# 4971
+# 4971
+# 3,121
+# 3121
+# 3121
+# 3,397
+# 3397
+# 3397
+# 2,127
+# 2127
+# 2127
+# 133
+# 133
+# 133
+# 190
+# 190
+# 190
+# 31
+# 248.0
+# 1984.0
+# 0.99
+# 49.5
+# 2475.0
+# 127
+# 127
+# 127
+# 53
+# 53
+# 53
+# 92
+# 92
+# 92
+# 6
+# 6
+# 6
+# 22
+# 22
+# 22
+# 2.63
+# 2.63
+# cost of living: ['0', '20', '20', '20', '32', '32', '32', '8', '8', '8', '4971', '4971', '4971', '3121', '3121', '3121', '3397', '3397', '3397', '2127', '2127', '2127', '133', '133', '133', '190', '190', '1520.0', '248.0', '1984.0', '99200.0', '49.5', '2475.0', '2475.0', '127', '127', '127', '53', '53', '53', '92', '92', '92', '6', '6', '6', '22', '22', '22', '2.63', '2.63']
+# Traceback (most recent call last):
+#   File "C:\Users\kris3\PycharmProjects\Groepswerk\lib\site-packages\mysql\connector\connection_cext.py", line 535, in cmd_query
+#     self._cmysql.query(query,
+# _mysql_connector.MySQLInterfaceError: Cannot add or update a child row: a foreign key constraint fails (`py_xavier`.`data`, CONSTRAINT `data_spec_sp_id_fk` FOREIGN KEY (`da_spec_id`) REFERENCES `spec` (`sp_id`) ON DELETE CASCADE ON UPDATE CASCADE)
+#
+# During handling of the above exception, another exception occurred:
+#
+# Traceback (most recent call last):
+#   File "C:\Users\kris3\PycharmProjects\Groepswerk\Groepswerk_upload.py", line 41, in <module>
+#     dbase_insert(sql)
+#   File "C:\Users\kris3\PycharmProjects\Groepswerk\SQL_functions.py", line 34, in dbase_insert
+#     cursor.execute(sql)
+#   File "C:\Users\kris3\PycharmProjects\Groepswerk\lib\site-packages\mysql\connector\cursor_cext.py", line 269, in execute
+#     result = self._cnx.cmd_query(stmt, raw=self._raw,
+#   File "C:\Users\kris3\PycharmProjects\Groepswerk\lib\site-packages\mysql\connector\connection_cext.py", line 540, in cmd_query
+#     raise errors.get_mysql_exception(exc.errno, msg=exc.msg,
+# mysql.connector.errors.IntegrityError: 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`py_xavier`.`data`, CONSTRAINT `data_spec_sp_id_fk` FOREIGN KEY (`da_spec_id`) REFERENCES `spec` (`sp_id`) ON DELETE CASCADE ON UPDATE CASCADE)
+#
+# Process finished with exit code 1

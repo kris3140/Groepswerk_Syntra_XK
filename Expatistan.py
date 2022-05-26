@@ -5,8 +5,8 @@ import re
 country = 'japan'
 city = "tokyo"
 
-country = 'china'
-city = "shanghai"
+country = 'united states'
+city = "new-york-city"
 
 headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36',
@@ -61,7 +61,7 @@ for element in data_elements:
                 print(country, ";" ,city,";" ,element.get_text(), '; ', data.replace(',', ''))
             except:
                 continue
-        if country == 'united states':
+        else:
             x += 1.4                                          # must run 3 times
             try:
                 if len(sibling.get_text()) > 2:               # get rid of '\n'

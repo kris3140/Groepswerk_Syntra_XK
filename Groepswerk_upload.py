@@ -3,8 +3,9 @@ from Scraping_functions import *
 from time import sleep
 
 # Define the starting point and end point of the loop
-start_id = 63
-end_id = 85
+start_id = 248
+end_id = 249
+
 
 # Loop through the cities
 for city_id in range(start_id, end_id):
