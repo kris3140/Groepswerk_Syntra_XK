@@ -64,10 +64,10 @@ def get_pandas(city):
     my_conn = 'mysql://py_xavier:pk6pMJXXj83n@185.115.218.166/py_xavier'
 
 
-    sql = f"select name_climate as city, sp_short as spec, td_value as value, mo_short as month, sp_long as description, sp_measure as measure from testdata " \
-          f"left join city c on testdata.td_ci_id = c.ci_id  " \
-          f"left join spec s on testdata.td_spec_id = s.sp_id " \
-          f"left join months m on testdata.td_mo_id = m.mo_id " \
+    sql = f"select name_climate as city, sp_short as spec, da_value as value, mo_short as month, sp_long as description, sp_measure as measure from data " \
+          f"left join city c on data.da_ci_id = c.ci_id  " \
+          f"left join spec s on data.da_spec_id = s.sp_id " \
+          f"left join months m on data.da_mo_id = m.mo_id " \
           f"where ci_id = {city}"
 
     return pd.read_sql(sql, my_conn)
