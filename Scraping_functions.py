@@ -224,6 +224,11 @@ def numbeo_pollution(city):
 
     return data_list
 
+
+
+
+
+
 #
 # C:\Users\kris3\PycharmProjects\Groepswerk\Scripts\python.exe C:/Users/kris3/PycharmProjects/Groepswerk/Groepswerk_upload.py
 # 223 : ('new york', 'new york city', 'New York', 'United States')
