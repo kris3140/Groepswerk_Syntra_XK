@@ -1,15 +1,6 @@
 import mysql.connector as mysql
+import pandas as pd
 
-
-# def get_config():
-#     dbase = 'test_cities2'
-#     return {
-#         'user': 'root',
-#         'password': 'Gloeilamp+123',
-#         'host': '127.0.0.1',
-#         'database': dbase,
-#         'raise_on_warnings': True
-#         }  # dit is local host
 
 def get_config():
      return {
@@ -24,12 +15,11 @@ def get_data(sql):
 
     config = get_config()
     cnx = mysql.connect(**config)
-    cursor = cnx.cursor(dictionary=True)
+    cursor = cnx.cursor()   #(dictionary=True)
     cursor.execute(sql)
 
-    data = []
     for row in cursor:
-        data.append(row)
+        data = row
 
     cursor.close()
     cnx.close()
@@ -69,6 +59,21 @@ def dbase_update(sql):
         return False
 
 
+def get_pandas(city):
+    #  database://user:password@host/dbname
+    my_conn = 'mysql://py_xavier:pk6pMJXXj83n@185.115.218.166/py_xavier'
+
+
+    sql = f"select name_climate as city, sp_short as spec, da_value as value, mo_short as month, sp_long as description, sp_measure as measure from data " \
+          f"left join city c on data.da_ci_id = c.ci_id  " \
+          f"left join spec s on data.da_spec_id = s.sp_id " \
+          f"left join months m on data.da_mo_id = m.mo_id " \
+          f"where ci_id = {city}"
+
+    return pd.read_sql(sql, my_conn)
+
+
+
 #
 #
 # def Db_create_record(city):
@@ -92,23 +97,4 @@ def dbase_update(sql):
 #
 
 
-def get_dict():
-    return {
-        'ci_name': "Mumbai",
-        'ci_name2': "Bombay",
-        'ci_population': 20961472,
-        'ci_co_id': 2,
-        'ci_mintemp_jan': 17,
-        'ci_mintemp_feb': 18,
-        'ci_mintemp_mar': 21,
-        'ci_mintemp_apr': 24,
-        'ci_mintemp_may': 27,
-        'ci_mintemp_jun': 26,
-        'ci_maxtemp_jan': 31,
-        'ci_maxtemp_feb': 32,
-        'ci_maxtemp_mar': 33,
-        'ci_maxtemp_apr': 33,
-        'ci_maxtemp_may': 34,
-        'ci_maxtemp_jun': 32
-    }
 

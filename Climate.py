@@ -49,19 +49,19 @@ for month in precipit_table.find_all('th', scope="row"):
         print(precipit.get_text())
 
 # best_months = soup.find('span', id="best_time").parent.next_sibling.next_sibling.next_sibling
-best_month = ''
-x = 0
-for sibling in soup.find('span', id="best_time").parent.next_siblings:
-    x += 1
-    text = str(sibling)
-    if len(text) > 5:                  # ignore spam such as '\n' , <br>,... and only keep the long text
-        best_month += text
-    if x == 10: break
-best_month = best_month.replace('<strong>', '')
-best_month = best_month.replace('</strong>', '')
-best_month = best_month.replace('\n', ' ')
-print(); print("Best Month: \n", best_month)
-print()
+# best_month = ''
+# x = 0
+# for sibling in soup.find('span', id="best_time").parent.next_siblings:
+#     x += 1
+#     text = str(sibling)
+#     if len(text) > 5:                  # ignore spam such as '\n' , <br>,... and only keep the long text
+#         best_month += text
+#     if x == 10: break
+# best_month = best_month.replace('<strong>', '')
+# best_month = best_month.replace('</strong>', '')
+# best_month = best_month.replace('\n', ' ')
+# print(); print("Best Month: \n", best_month)
+# print()
 
 all_data = []
 sunshine_list = []

@@ -20,8 +20,6 @@ except Exception as exc:
 
 soup = BeautifulSoup(response.text, 'html.parser')
 
-crime_index = soup.find('td', text="Crime Index: ")
-safety_index = soup.find('td', text="Safety Index: ")
 level_crime = soup.find('td', text="Level of crime")
 home_broken = soup.find('td', text="Worries home broken and things stolen")
 mugged_robbed = soup.find('td', text="Worries being mugged or robbed")
@@ -32,7 +30,7 @@ drugs = soup.find('td', text="Problem people using or dealing drugs")
 level_safety_walk_day = soup.find('td', text="Safety walking alone during daylight")
 level_safety_walk_night = soup.find('td', text="Safety walking alone during night")
 
-scrape_list = [crime_index, safety_index, level_crime, home_broken,
+scrape_list = [level_crime, home_broken,
                mugged_robbed, car_stolen, attacked, insulted,
                drugs, level_safety_walk_day, level_safety_walk_night]
 
