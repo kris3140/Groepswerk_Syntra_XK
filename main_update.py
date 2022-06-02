@@ -11,6 +11,8 @@ app.config['MYSQL_DB'] = 'py_xavier'
 
 mysql = MySQL(app)
 
+#new line
+
 
 # class users(mysql.Model):
 #     _id = mysql.Column("id", mysql.Integer, primary_key=True)
