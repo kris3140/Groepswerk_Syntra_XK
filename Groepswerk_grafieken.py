@@ -5,8 +5,8 @@ import numpy as np
 
 
 # Get all data out of the SQL database for both cities
-city1 = get_pandas(221)
-city2 = get_pandas(177)
+city1 = get_pandas(145)
+city2 = get_pandas(130)
 #print(city2.to_string())
 
 # Get city name from each city

@@ -1,0 +1,55 @@
+#mainform input, #mainform select{
+    border: 1px solid #aaa;
+    background: #b01010;
+    border-radius: 3px;
+    padding: 3px 10px;
+}
+
+.body{
+    background-color: #b01010;
+}
+.navbar  {
+}
+
+.section_head {
+    width: 100%;
+    text-align: center;
+    color: white;
+    font-size: 50px;
+    font-weight: bold;
+    letter-spacing: 3px;
+    border-bottom: 1px solid white;
+    padding: 10px 10px 10px 10px;
+}
+
+p.info {
+    padding: 10px 30px;
+    background: #6671cd;
+    color: #06571b;
+    font-weight: bold;
+}
+
+.kolom {
+    border: 1px solid #05805f;
+    min-height: 300px;
+    background: white;
+    box-shadow: 10px 10px 10px rgb(0 0 0 / 20%);
+}
+
+#section1 {
+    background: #000000;
+}
+
+#section1 div.row.rowtitle {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 50px 15px 30px 15px ;
+}
+
+#section1 div.row.flexrow {
+    display: flex;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 0px 0px 0px 0px ;
+}
+
