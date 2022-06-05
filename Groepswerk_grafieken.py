@@ -4,9 +4,12 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
+city1 = 'rome'
+city2 = 'naples'
+
 # Get all data out of the SQL database for both cities
-city1 = get_pandas(145)
-city2 = get_pandas(130)
+city1 = get_pandas(city1)
+city2 = get_pandas(city2)
 #print(city2.to_string())
 
 # Get city name from each city
