@@ -4,6 +4,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
+image_path = "Front_End/static/image"
+
 # Get all data out of the SQL database for both cities
 city1 = get_pandas(145)
 city2 = get_pandas(130)
@@ -39,7 +41,7 @@ for spec in specs:
     ax.legend()
 
     fig.set_size_inches([6,5])
-    fig.savefig(f"graph_{spec}.png", dpi=300)
+    fig.savefig(f"{image_path}/graph_{spec}.png", dpi=300)
 
 
 # Create bar charts for the rest of the data
@@ -54,7 +56,7 @@ def create_barchart(Specs, city1_values, city2_values, city_name1, city_name2, t
     ax.set_xticks(x, Specs)
     ax.legend()
     fig.set_size_inches([6, 5])
-    fig.savefig(f"bar_{title}.png", dpi=300)
+    fig.savefig(f"{image_path}/bar_{title}.png", dpi=300)
 
 # Set spec as index
 city1.set_index('spec', inplace=True)
@@ -123,7 +125,7 @@ city2_values = list(city2_data["value"].astype(float))
 Specs = city1_data.index
 create_barchart(Specs, city1_values, city2_values, city_name1, city_name2, title )
 
-# Create a subset for 'poluttion' items
+# Create a subset for 'pollution' items
 title = "Pollution"
 city1_data = city1.loc["POLLUTION":"NOISE", :]
 city2_data = city2.loc["POLLUTION":"NOISE", :]
