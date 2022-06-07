@@ -68,7 +68,7 @@ def get_pandas(city):
           f"left join city c on data.da_ci_id = c.ci_id  " \
           f"left join spec s on data.da_spec_id = s.sp_id " \
           f"left join months m on data.da_mo_id = m.mo_id " \
-          f"where ci_id = {city}"
+          f"where name_climate = '{city}'"
 
     return pd.read_sql(sql, my_conn)
 
