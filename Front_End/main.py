@@ -1,8 +1,9 @@
 from flask import Flask, redirect, url_for, render_template, request, session, flash
-from datetime import timedelta
 from flask_mysqldb import MySQL, MySQLdb
 from flask_sqlalchemy import SQLAlchemy
-
+from Groepswerk_grafieken import create_graphs
+import flask_login
+from werkzeug.security import generate_password_hash, check_password_hash
 
 
 # create a flask instance
@@ -16,30 +17,41 @@ app.config['MYSQL_USER'] = 'py_xavier'
 app.config['MYSQL_PASSWORD'] = 'pk6pMJXXj83n'
 app.config['MYSQL_DB'] = 'py_xavier'
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
+login_manager = flask_login.LoginManager()
+login_manager.init_app(app)
+
 
 db = SQLAlchemy(app)
 db2 = MySQL(app)
 
-cities=[]
+# the UserMixin adds properties that are used by Flask-Login on various instances.(is_authenticated(), get_id(), ...)
+# Password hash functions are from the Python Werkzeug library, super easy
+class User(flask_login.UserMixin, db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(255))
+    hashed_password = db.Column(db.String(255))
 
-class users(db.Model):
-    _id = db.Column("id", db.Integer, primary_key=True)
-    name = db.Column(db.String(100))
-    email = db.Column(db.String(100))
-    password = db.Column(db.String(50))
-    password_check = db.Column(db.String(50))
-
-    def __init__(self, name, email):
+    def __init__(self, name, password):
         self.name = name
-        self.email = email
+        self.hashed_password = generate_password_hash(password)
 
+    def verify_password(self, password):
+        return check_password_hash(self.hashed_password, password)
+
+
+# Used by Flask-login library to load users on login
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
 
 @app.route("/")
+# @flask_login.login_required
 def home():
     return render_template("index.html")
 
 
 @app.route("/compare", methods=["POST", "GET"])
+@flask_login.login_required
 def compare():
     cur = db2.connection.cursor(MySQLdb.cursors.DictCursor)
     cur.execute("SELECT name_climate FROM city order by name_climate")
@@ -49,105 +61,49 @@ def compare():
     if request.method == "POST":
         city1 = request.form.get("city1")
         city2 = request.form.get("city2")
+        create_graphs(city1, city2)
         return redirect(url_for("dashboard"))
 
     return render_template("compare.html", citylist=citylist)
 
 
-
-
-
-
 @app.route("/dashboard")
+@flask_login.login_required
 def dashboard():
     return render_template("dashboard.html")
 
-@app.route("/login", methods=["GET", "POST"])
+@app.route('/login', methods=['GET', 'POST'])
 def login():
+    # If user is logged in, redirect to homepage/whatever
+    if flask_login.current_user.is_authenticated:
+        return redirect("/")
 
-    # # POST
-    # if request.method == "POST": # na het verzenden van inloggegevens
-    #
-    #     # user opslaan in de sessie
-    #     post_user = request.form["nm"]
-    #     session.permanent = True
-    #     session["user"] = post_user
-    #
-    #     # gebruiker opzoeken in de database
-    #     found_user = users.query.filter_by(name=post_user).first()
-    #
-    #     # gebruiker bestaat al
-    #     if found_user:
-    #         session["email"] = found_user.email
-    #
-    #     # gebruiker bestaat nog niet
-    #     else:
-    #         # gebruiker aanmaken in de database
-    #         usr = users(post_user, "")
-    #         db.session.add(usr)
-    #         db.session.commit()
-    #
-    #     flash(f"Login successful!")
-    #     return redirect(url_for("welcome_user"))
-    #
-    # # GET
-    # else:  # na het opvragen van het inlogformulier
-    #
-    #     # gebruiker is al ingelogd
-    #     if "user" in session:
-    #         flash(f"Already logged in!")
-    #         return redirect(url_for("welcome_user"))
-    #
-    #     # gebruiker is nog niet ingelogd
-        return render_template("signin.html")
-
-
-@app.route("/user", methods=["GET", "POST"])
-def welcome_user():
-
-    # als de gebruiker ingelogd is
-    if "user" in session:
-        user = session["user"]
-
-        if request.method == "POST": # als de gebruiker zijn email opstuurt
-
-            # email opslaan in sessie
-            email = request.form["email"]
-            session["email"] = email
-
-            # gebruiker opzoeken in de database, en updaten
-            found_user = users.query.filter_by(name=user).first()
-            found_user.email = email
-            db.session.commit()
-
-            flash("Email was saved")
-
-        elif "email" in session:
-            email = session["email"]
-
+    # If request is the form submit
+    if request.method == 'POST':
+        # Retrieve email/name from form
+        name = request.form['email']
+        # Query user by email/name
+        user = User.query.filter_by(name=name).first()
+        # If query returns something (is not None) AND passwords match (checks can be separated in different if statements for more specific error handling)
+        if user is not None and user.verify_password(request.form['password']):
+            # Login user & redirect to homepage/whatever
+            flask_login.login_user(user)
+            return redirect(url_for("compare"))
+        # Else show error
         else:
-            email = None
+            flash("Wrong login!", 'error')
 
-        return render_template("user.html", email=email)
-
-    # als de gebruiker NIET ingelogd is
-    else:
-        flash(f"You are not logged in!")
-        return redirect(url_for("login"))
+    # Render login page
+    return render_template('signin.html')
 
 
 
-@app.route("/logout")
+@app.route("/logout", methods= ['GET'])
 def logout():
-    session.pop("user", None)
-    session.pop("email", None)
-    flash( f"You have been logged out!", "info" )
+    # if user is logged in then logout
+    if flask_login.current_user.is_authenticated:
+        flask_login.logout_user()
     return redirect(url_for("login"))
-
-
-@app.route("/admin")
-def admin():
-    return redirect(url_for("user", name="Admin!"))
 
 
 if __name__ == "__main__":
