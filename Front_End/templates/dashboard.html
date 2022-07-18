@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+
+
+{% block content %}
+
+<div id="section1" class="container-fluid">
+
+    <div class="row rowtitle">
+        <h1 class="text-center section_head">Dashboard Builder</h1>
+    </div>
+
+    <div class="row flexrow">
+
+              <h1 class="text-center mb-5">Night Out</h1>
+              <img src="{{url_for('static', filename='image/bar_A Night Out.png')}}" class="img-fluid" alt="Image not found">
+
+              <h1 class="text-center mb-5">Clothes</h1>
+              <img src="{{url_for('static', filename='image/bar_Clothes.png')}}" class="img-fluid" alt="Image not found">
+
+                <h1 class="text-center mb-5">Pollution</h1>
+              <img src="{{url_for('static', filename='image/bar_Pollution.png')}}" class="img-fluid" alt="Image not found">
+
+                <h1 class="text-center mb-5">Comfort</h1>
+              <img src="{{url_for('static', filename='image/bar_City Comfort.png')}}" class="img-fluid" alt="Image not found">
+
+                <h1 class="text-center mb-5">Crime</h1>
+              <img src="{{url_for('static', filename='image/bar_Crime.png')}}" class="img-fluid" alt="Image not found">
+
+                <h1 class="text-center mb-5">Household</h1>
+              <img src="{{url_for('static', filename='image/bar_Household.png')}}" class="img-fluid" alt="Image not found">
+
+                <h1 class="text-center mb-5">Rent</h1>
+              <img src="{{url_for('static', filename='image/bar_Rent.png')}}" class="img-fluid" alt="Image not found">
+
+                <h1 class="text-center mb-5">Shopping</h1>
+              <img src="{{url_for('static', filename='image/bar_Shopping.png')}}" class="img-fluid" alt="Image not found">
+
+                 <h1 class="text-center mb-5">Transport</h1>
+              <img src="{{url_for('static', filename='image/bar_Transport.png')}}" class="img-fluid" alt="Image not found">
+
+                <h1 class="text-center mb-5">Precipitation</h1>
+              <img src="{{url_for('static', filename='image/graph_RAIN.png')}}" class="img-fluid" alt="Image not found">
+
+                 <h1 class="text-center mb-5">Rainy days</h1>
+              <img src="{{url_for('static', filename='image/graph_RAINDAYS.png')}}" class="img-fluid" alt="Image not found">
+
+                <h1 class="text-center mb-5">Hours Sun</h1>
+              <img src="{{url_for('static', filename='image/graph_SUN.png')}}" class="img-fluid" alt="Image not found">
+
+                <h1 class="text-center mb-5">Maximum Temperature</h1>
+              <img src="{{url_for('static', filename='image/graph_TEMP_MAX.png')}}" class="img-fluid" alt="Image not found">
+
+                <h1 class="text-center mb-5">Minimum Temperature</h1>
+              <img src="{{url_for('static', filename='image/graph_TEMP_MIN.png')}}" class="img-fluid" alt="Image not found">
+    </div>
+
+</div> <!-- end section1 -->
+
+{% endblock %}
